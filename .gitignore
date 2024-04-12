@@ -6,6 +6,7 @@ __pycache__/
 
 # C extensions
 *.so
+tb_log/*
 
 # Distribution / packaging
 .Python

@@ -65,7 +65,7 @@ exist_file_list = os.listdir(ct_save_path)
 print('exist_file_list ', exist_file_list)
 
 def normalize(ct_narray):
-    ct_voxel_ndarray = ct_narray.copy()
+    ct_voxel_ndarray = ct_narray.clone()
     ct_voxel_ndarray = ct_voxel_ndarray.flatten()
     # for all data
     thred = np.mean(ct_voxel_ndarray)

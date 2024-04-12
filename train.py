@@ -18,7 +18,7 @@ def set_parse():
     parser.add_argument("--pretrain", type = str, default='')
     parser.add_argument("--resume", type = str, default='')
     parser.add_argument("--data_dir", type = str, default='')
-    parser.add_argument("--dataset_codes", type = list, default=['0010', '0011'])
+    parser.add_argument("--dataset_codes", type = list, nargs='+', default=['0001'])
     # config
     parser.add_argument("--test_mode", default=False, type=bool)
     parser.add_argument("-infer_overlap", default=0.5, type=float, help="sliding window inference overlap")
