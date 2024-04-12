@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-segment_anything_volumetric/*.pyc
+*.pyc
 
 # C extensions
 *.so
@@ -32,6 +32,15 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
+segment_anything_volumetric/modeling/__pycache__/*.pyc
+
+*.egg
+*.egg-info
+*.bv
+segment_anything_volumetric/__pycache__/*.pyc
+build
+__pycache__
+eggs
 
 # Installer logs
 pip-log.txt
@@ -161,3 +170,4 @@ cython_debug/
 #.idea/
 
 pretrained/*
+work_dir/*
