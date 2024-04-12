@@ -32,7 +32,7 @@ class ForegroundNormalization(transforms.Transform):
         return d
     
     def normalize(self, ct_narray):
-        ct_voxel_ndarray = ct_narray.copy()
+        ct_voxel_ndarray = ct_narray.clone()
         ct_voxel_ndarray = ct_voxel_ndarray.flatten()
         thred = np.mean(ct_voxel_ndarray)
         voxel_filtered = ct_voxel_ndarray[(ct_voxel_ndarray > thred)]

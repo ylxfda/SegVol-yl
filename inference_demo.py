@@ -27,8 +27,8 @@ def set_parse():
 
 def dice_score(preds, labels):  # on GPU
     assert preds.shape[0] == labels.shape[0], "predict & target batch size don't match\n" + str(preds.shape) + str(labels.shape)
-    predict = preds.view(1, -1)
-    target = labels.view(1, -1)
+    predict = preds.reshape(1, -1)
+    target = labels.reshape(1, -1)
     if target.shape[1] < 1e8:
         predict = predict.cuda()
         target = target.cuda()

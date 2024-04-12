@@ -1,8 +1,8 @@
 {
     "dataset_name": "AbdomenCT-1k",
-    "categories": ["liver", "kidney", "spleen", "pancreas"],
+    "categories": ["vertebrae T12", "vertebrae L1"],
     "demo_case": {
-        "ct_path": "path/to/ct",
-        "gt_path": "path/to/gt" 
+        "ct_path": "/data/DataSSD2/yli/nnunet_raw/nnunet_soma/Dataset070_soma_sammed/imagesTr/002501_0000.nii.gz",
+        "gt_path": "/data/DataSSD2/yli/nnunet_raw/nnunet_soma/Dataset070_soma_sammed/labelsTr/002501.nii.gz" 
     }
 }
