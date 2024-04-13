@@ -16,7 +16,7 @@ from monai.transforms import (
 def set_parse():
     # %% set up parser
     parser = argparse.ArgumentParser()
-    parser.add_argument("-category", default=['liver', 'right kidney', 'spleen', 'pancreas', 'aorta', 'inferior vena cava', 'right adrenal gland', 'left adrenal gland', 'gallbladder', 'esophagus', 'stomach', 'duodenum', 'left kidney'], type=list)
+    parser.add_argument("-category", default=['tibia knee partial', 'femur knee partial'], type=list)
     parser.add_argument("-image_dir", type=str, required=True)
     parser.add_argument("-label_dir", type=str, required=True)
     parser.add_argument("-dataset_code", type=str, required=True)
@@ -45,7 +45,7 @@ for idx in range(len(image_list_all)):
 
 img_loader = Compose(
         [
-            LoadImaged(keys=['image', 'label']),
+            LoadImaged(keys=['image', 'label'], reader="ITKReader"),
             AddChanneld(keys=['image', 'label']),
             Orientationd(keys=['image', 'label'], axcodes="RAS"),
         ]
@@ -61,8 +61,12 @@ if not os.path.exists(gt_save_path):
     os.makedirs(gt_save_path)
 
 # exist file:
-exist_file_list = os.listdir(ct_save_path)
-print('exist_file_list ', exist_file_list)
+exist_ct_file_list = os.listdir(ct_save_path)
+exist_gt_file_list = os.listdir(gt_save_path)
+exist_ct_file_list = [item.split('.')[0] for item in exist_ct_file_list]
+exist_gt_file_list = [item.split('.')[0] for item in exist_gt_file_list]
+
+print('exist_file_list ', exist_ct_file_list)
 
 def normalize(ct_narray):
     ct_voxel_ndarray = ct_narray.clone()
@@ -83,7 +87,7 @@ def normalize(ct_narray):
 def run(info):
     idx, file_name, case_path, label_path = info
     item = {}
-    if file_name + '.npy' in exist_file_list:
+    if file_name in exist_ct_file_list and file_name in exist_gt_file_list:
         print(file_name + '.npy exist, skip')
         return
     print('process ', idx, '---' ,file_name)
