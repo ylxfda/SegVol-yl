@@ -1,8 +1,8 @@
 {
-    "dataset_name": "AbdomenCT-1k",
-    "categories": ["liver", "kidney", "spleen", "pancreas"],
+    "dataset_name": "mako tka",
+    "categories": ["tibia knee partial", "femur knee partial"],
     "demo_case": {
-        "ct_path": "/data/home/yli/Downloads/FLARE22Train/images/FLARE22_Tr_0001_0000.nii.gz",
-        "gt_path": "/data/home/yli/Downloads/FLARE22Train/labels/FLARE22_Tr_0001.nii.gz" 
+        "ct_path": "/data/DataSSD3/yli/data/nnunet_raw/nnunet_stkn41/Dataset041_knee/imagesTs/stkn41_0004_0000.nrrd",
+        "gt_path": "/data/DataSSD3/yli/data/nnunet_raw/nnunet_stkn41/Dataset041_knee/labelsTs/stkn41_0004.nrrd" 
     }
 }

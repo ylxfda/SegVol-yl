@@ -29,7 +29,7 @@ def set_parse():
     parser.add_argument("--RandFlipd_prob", default=0.2, type=float, help="RandFlipd aug probability")
     parser.add_argument("--RandScaleIntensityd_prob", default=0.1, type=float, help="RandScaleIntensityd aug probability")
     parser.add_argument("--RandShiftIntensityd_prob", default=0.1, type=float, help="RandShiftIntensityd aug probability")
-    parser.add_argument('-num_workers', type=int, default=8)
+    parser.add_argument('-num_workers', type=int, default=4)
     # dist
     parser.add_argument('--dist', dest='dist', type=bool, default=True,
                         help='distributed training or not')

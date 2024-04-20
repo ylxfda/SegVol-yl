@@ -24,9 +24,11 @@
                 "CUDA_VISIBLE_DEVICES": "2,3",
             },
             "args": [
-                "--resume", "/data/home/yli/projects/CLIP-SAM/pretrained/SegVol_v1.pth",
+                // "--resume", "/data/home/yli/projects/CLIP-SAM/pretrained/SegVol_v1.pth",
+                "--resume", "/data/home/yli/projects/CLIP-SAM/work_dir/20240415-1646/medsam_model_e280.pth",
                 "-work_dir", "/data/home/yli/projects/CLIP-SAM/work_dir",
                 "--demo_config", "./config/config_demo.json",
+                "-output_dir", "./output",
             ]
         },
 
@@ -42,11 +44,11 @@
                 "CUDA_VISIBLE_DEVICES": "2,3",
             },
             "args": [
-                "-image_dir", "/data/DataSSD3/yli/data/FLARE22Train/images",
-                "-label_dir", "/data/DataSSD3/yli/data/FLARE22Train/labels",
-                "-dataset_code", "0001",
-                "-save_root", "/data/DataSSD3/yli/data/FLARE22Train/clip-sam",
-                "-test_ratio", "0.05"
+                "-image_dir", "/data/DataSSD2/yli/nnunet_raw/nnunet_stkn41/Dataset041_knee/imagesTs/",
+                "-label_dir", "/data/DataSSD2/yli/nnunet_raw/nnunet_stkn41/Dataset041_knee/labelsTs/",
+                "-dataset_code", "0002",
+                "-save_root", "/data/DataSSD2/yli/clip_sam/",
+                "-test_ratio", "0.2"
             ]
         },
 
@@ -62,8 +64,8 @@
                 "CUDA_VISIBLE_DEVICES": "2,3",
             },
             "args": [
-                "-dataset_code", "0001",
-                "-datasets_root", "/data/DataSSD3/yli/data/FLARE22Train/clip-sam",
+                "-dataset_code", "0002",
+                "-datasets_root", "/data/DataSSD2/yli/clip_sam/",
             ]
         },
 
@@ -76,12 +78,13 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "env": {
-                "CUDA_VISIBLE_DEVICES": "2,3",
+                "CUDA_VISIBLE_DEVICES": "3",
             },
             "args": [
                 "--resume", "/data/home/yli/projects/CLIP-SAM/pretrained/SegVol_v1.pth",
                 "-work_dir", "work_dir",
-                "--data_dir", "/data/DataSSD3/yli/data/FLARE22Train/clip-sam/",
+                "--data_dir", "/data/DataSSD2/yli/clip_sam/",
+                // "--data_dir", "/data/DataSSD3/yli/data/FLARE22Train/clip-sam/",
                 // "--dataset_codes", "0001",
             ]
         },

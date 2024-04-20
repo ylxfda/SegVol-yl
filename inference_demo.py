@@ -9,6 +9,7 @@ from data_process.demo_data_process import process_ct_gt
 import monai.transforms as transforms
 from utils.monai_inferers_utils import sliding_window_inference, generate_box, select_points, build_binary_cube, build_binary_points, logits2roi_coor
 from utils.visualize import draw_result
+from utils.debug_tool import save_nifti
 
 def set_parse():
     # %% set up parser
@@ -19,6 +20,7 @@ def set_parse():
     parser.add_argument("-spatial_size", default=(32, 256, 256), type=tuple)
     parser.add_argument("-patch_size", default=(4, 16, 16), type=tuple)
     parser.add_argument('-work_dir', type=str, default='./work_dir')
+    parser.add_argument('-output_dir', type=str, default='./work_dir')
     ### demo
     parser.add_argument('--demo_config', type=str, required=True)
     parser.add_argument("--clip_ckpt", type = str, default = './config/clip')
@@ -27,6 +29,7 @@ def set_parse():
 
 def dice_score(preds, labels):  # on GPU
     assert preds.shape[0] == labels.shape[0], "predict & target batch size don't match\n" + str(preds.shape) + str(labels.shape)
+    sizes = preds.shape    
     predict = preds.reshape(1, -1)
     target = labels.reshape(1, -1)
     if target.shape[1] < 1e8:
@@ -42,7 +45,11 @@ def dice_score(preds, labels):  # on GPU
     if target.shape[1] < 1e8:
         predict = predict.cpu()
         target = target.cpu()
-    return dice
+        
+    # reshape to original shape
+    predict = predict.reshape(sizes)
+    
+    return dice, predict
 
 def zoom_in_zoom_out(args, segvol_model, image, image_resize, gt3D, gt3D_resize, categories=None):
     logits_labels_record = {}
@@ -94,7 +101,7 @@ def zoom_in_zoom_out(args, segvol_model, image, image_resize, gt3D, gt3D_resize,
             binary_cube = F.interpolate(
                 binary_cube_resize.unsqueeze(0).unsqueeze(0).float(),
                 size=ori_shape, mode='nearest')[0][0]
-        zoom_out_dice = dice_score(logits_global_single.squeeze(), label_single.squeeze())
+        zoom_out_dice, _ = dice_score(logits_global_single.squeeze(), label_single.squeeze())
         logits_labels_record[categories[item_idx]] = (
             zoom_out_dice,
             image_single, 
@@ -143,14 +150,15 @@ def zoom_in_zoom_out(args, segvol_model, image, image_resize, gt3D, gt3D_resize,
                 )
             logits_single_cropped = logits_single_cropped.cpu().squeeze()
         logits_global_single[min_d:max_d+1, min_h:max_h+1, min_w:max_w+1] = logits_single_cropped
-        zoom_in_dice = dice_score(logits_global_single.squeeze(), label_single.squeeze())
+        zoom_in_dice, zoom_in_pred = dice_score(logits_global_single.squeeze(), label_single.squeeze())
         logits_labels_record[categories[item_idx]] = (
             zoom_in_dice,
             image_single, 
             points_single,
             box_single,
             logits_global_single, 
-            label_single)
+            label_single,
+            zoom_in_pred)
         print(f'===> zoom out dice {zoom_out_dice:.4f} -> zoom-out-zoom-in dice {zoom_in_dice:.4f} <===')
     return logits_labels_record
 
@@ -165,10 +173,16 @@ def inference_single_ct(args, segvol_model, data_item, categories):
         gt3D.unsqueeze(0), gt3D__zoom_out.unsqueeze(0),
         categories=categories)
     
+    # save prediction to nifti
+    for target, values in logits_labels_record.items():
+        dice_score, image, point_prompt, box_prompt, logits, labels, pred = values
+        print(f'saving prediction to nifti image')
+        save_nifti(pred, os.path.join(args.output_dir, f'{target}_pred.nii.gz'))
+    
     # visualize
     if args.visualize:
         for target, values in logits_labels_record.items():
-            dice_score, image, point_prompt, box_prompt, logits, labels = values
+            dice_score, image, point_prompt, box_prompt, logits, labels, _ = values
             print(f'{target} result with Dice score {dice_score:.4f} visualizing')
             draw_result(target + f"-Dice {dice_score:.4f}", image, box_prompt, point_prompt, logits, labels, args.spatial_size, args.work_dir)
 

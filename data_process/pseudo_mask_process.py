@@ -94,7 +94,7 @@ def run(info):
     print(f'---> save {save_file}')
     np.save(save_file, segmented_image)
 
-with multiprocessing.Pool(processes=20) as pool:
+with multiprocessing.Pool(processes=80) as pool:
     pool.map(run, process_list)
 
 print('FH Pseudo Mask Build Done!')
