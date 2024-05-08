@@ -29,6 +29,8 @@
                 "-work_dir", "/data/home/yli/projects/CLIP-SAM/work_dir",
                 "--demo_config", "./config/config_demo.json",
                 "-output_dir", "./output",
+                "-ct_path", "/data/DataSSD3/yli/data/nnunet_raw/nnunet_stkn41/Dataset041_knee/imagesTr/stkn41_0001_0000.nrrd",
+                "-gt_path", "/data/DataSSD3/yli/data/nnunet_raw/nnunet_stkn41/Dataset041_knee/labelsTr/stkn41_0001.nrrd",
             ]
         },
 

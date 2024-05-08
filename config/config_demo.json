@@ -1,8 +1,4 @@
 {
     "dataset_name": "mako tka",
-    "categories": ["tibia knee partial", "femur knee partial"],
-    "demo_case": {
-        "ct_path": "/data/DataSSD3/yli/data/nnunet_raw/nnunet_stkn41/Dataset041_knee/imagesTs/stkn41_0004_0000.nrrd",
-        "gt_path": "/data/DataSSD3/yli/data/nnunet_raw/nnunet_stkn41/Dataset041_knee/labelsTs/stkn41_0004.nrrd" 
-    }
+    "categories": ["tibia bone knee part", "femur bone knee part"]
 }

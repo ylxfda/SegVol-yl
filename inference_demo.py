@@ -21,6 +21,8 @@ def set_parse():
     parser.add_argument("-patch_size", default=(4, 16, 16), type=tuple)
     parser.add_argument('-work_dir', type=str, default='./work_dir')
     parser.add_argument('-output_dir', type=str, default='./work_dir')
+    parser.add_argument('-ct_path', type=str, default=None)
+    parser.add_argument('-gt_path', type=str, default=None)
     ### demo
     parser.add_argument('--demo_config', type=str, required=True)
     parser.add_argument("--clip_ckpt", type = str, default = './config/clip')
@@ -213,6 +215,8 @@ def main(args):
     # load demo config
     with open(args.demo_config, 'r') as file:
         config_dict = json.load(file)
+        infer_case = {'ct_path': args.ct_path, 'gt_path': args.gt_path}
+        config_dict['demo_case'] = infer_case
     ct_path, gt_path, categories = config_dict['demo_case']['ct_path'], config_dict['demo_case']['gt_path'], config_dict['categories']
 
     # preprocess for data

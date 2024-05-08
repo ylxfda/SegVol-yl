@@ -18,7 +18,7 @@ def set_parse():
     parser.add_argument("--pretrain", type = str, default='')
     parser.add_argument("--resume", type = str, default='')
     parser.add_argument("--data_dir", type = str, default='')
-    parser.add_argument("--dataset_codes", type = list, nargs='+', default=['0001'])
+    parser.add_argument("--dataset_codes", type = list, nargs='+', default=['0002'])
     # config
     parser.add_argument("--test_mode", default=False, type=bool)
     parser.add_argument("-infer_overlap", default=0.5, type=float, help="sliding window inference overlap")
@@ -29,7 +29,7 @@ def set_parse():
     parser.add_argument("--RandFlipd_prob", default=0.2, type=float, help="RandFlipd aug probability")
     parser.add_argument("--RandScaleIntensityd_prob", default=0.1, type=float, help="RandScaleIntensityd aug probability")
     parser.add_argument("--RandShiftIntensityd_prob", default=0.1, type=float, help="RandShiftIntensityd aug probability")
-    parser.add_argument('-num_workers', type=int, default=4)
+    parser.add_argument('-num_workers', type=int, default=8)
     # dist
     parser.add_argument('--dist', dest='dist', type=bool, default=True,
                         help='distributed training or not')
