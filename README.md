@@ -3,10 +3,8 @@
   
   <img src="https://github.com/BAAI-DCAI/SegVol/assets/60123629/6f56fc35-1d75-468c-ab82-1e0cf47eb83e" width="85%" height="85%">
   
-  | 📃 [**Paper**](https://arxiv.org/abs/2311.13385) | 🤗 [**Web Tool**](https://huggingface.co/spaces/BAAI/SegVol) | 🤗 [**Model Card**](https://huggingface.co/BAAI/SegVol/tree/main) | 📂 [**Weight Files**](https://drive.google.com/drive/folders/1TEJtgctH534Ko5r4i79usJvqmXVuLf54?usp=drive_link) | 📂 **Datasets([ModelScope](https://www.modelscope.cn/datasets/GoodBaiBai88/M3D-Seg/summary)/[HuggingFace](https://huggingface.co/datasets/GoodBaiBai88/M3D-Seg))** |
+ | 🌟**Quickstart([ModelScope](https://www.modelscope.cn/models/yuxindu/SegVol/summary) / [🤗HF](https://huggingface.co/BAAI/SegVol))** | 📃 [**Paper**](https://arxiv.org/abs/2311.13385) | [**Web Tool**](https://www.modelscope.cn/studios/YuxinDu/SegVol/summary) | 📂 **Datasets([ModelScope](https://www.modelscope.cn/datasets/GoodBaiBai88/M3D-Seg/summary)/[🤗HF](https://huggingface.co/datasets/GoodBaiBai88/M3D-Seg))** |
 </div>
-
-### 🚀**News**: The 25 processed datasets are being uploaded to [ModelScope/魔搭社区](https://www.modelscope.cn/datasets/GoodBaiBai88/M3D-Seg/summary) and [HuggingFace](https://huggingface.co/datasets/GoodBaiBai88/M3D-Seg).
 
 The SegVol is a universal and interactive model for volumetric medical image segmentation. SegVol accepts **point**, **box** and **text** prompt while output volumetric segmentation. By training on 90k unlabeled Computed Tomography (CT) volumes and 6k labeled CTs, this foundation model supports the segmentation of over 200 anatomical categories.
 
@@ -14,7 +12,11 @@ We have released SegVol's **inference code**, **training code**, **model params*
 
 **Keywords**: 3D medical SAM, volumetric image segmentation
 
-## Quickstart
+## Quickstart: Enable easy training and testing
+### 🌟[Quickstart](https://www.modelscope.cn/models/yuxindu/SegVol/summary) with ModelScope (无需代理)
+### 🌟[Quickstart](https://huggingface.co/BAAI/SegVol) with HuggingFace
+
+## Start with source code
 ### Requirements
 The [pytorch v1.11.0](https://pytorch.org/get-started/previous-versions/) (or a higher version) is needed first. Following install key requirements using commands:
 
@@ -33,7 +35,7 @@ pip install matplotlib
 [How to use our pre-trained ViT as your model encoder](https://github.com/BAAI-DCAI/SegVol/blob/main/documents/pretrained_vit.md).
 
 ### Datasets involved
-🚀The 25 processed datasets are being uploaded to [ModelScope/魔搭社区](https://www.modelscope.cn/datasets/GoodBaiBai88/M3D-Seg/summary) and [HuggingFace](https://huggingface.co/datasets/GoodBaiBai88/M3D-Seg).
+🌟The 25 processed datasets are being uploaded to [ModelScope/魔搭社区](https://www.modelscope.cn/datasets/GoodBaiBai88/M3D-Seg/summary) and [HuggingFace](https://huggingface.co/datasets/GoodBaiBai88/M3D-Seg).
 
 
 Links to the original datasets:
@@ -66,7 +68,7 @@ Links to the original datasets:
 |VerSe20|	https://osf.io/t98fz/|
 |WORD|	https://paperswithcode.com/dataset/word|
 
-## [Web Tool](https://huggingface.co/spaces/BAAI/SegVol) of SegVol 📽
+## [Web Tool](https://www.modelscope.cn/studios/YuxinDu/SegVol/summary) of SegVol 📽
 https://github.com/BAAI-DCAI/SegVol/assets/60123629/242a1578-e418-463c-9d53-a62eeb154c7d
 
 ## 🏆Internal Validation Performance(Dice Score)
@@ -113,7 +115,7 @@ We performed an external validation experiment using a novel annotated dataset f
 
 (2023.12.15) *The training code has been uploaded!*
 
-(2023.12.04) ***A web tool of SegVol is [here](https://huggingface.co/spaces/BAAI/SegVol)! Just enjoy it!*** 🔥🔥🔥
+(2023.12.04) ***A web tool of SegVol is [here](https://www.modelscope.cn/studios/YuxinDu/SegVol/summary)! Just enjoy it!*** 🔥🔥🔥
 
 (2023.11.28) *Our model and demo case have been open-source at [huggingface/BAAI/SegVol](https://huggingface.co/BAAI/SegVol/tree/main).* 🤗🤗
 
