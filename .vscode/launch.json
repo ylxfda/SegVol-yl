@@ -21,21 +21,21 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "env": {
-                "CUDA_VISIBLE_DEVICES": "2,3",
+                "CUDA_VISIBLE_DEVICES": "3",
             },
             "args": [
                 // "--resume", "/data/home/yli/projects/CLIP-SAM/pretrained/SegVol_v1.pth",
-                "--resume", "/data/home/yli/projects/CLIP-SAM/work_dir/20240415-1646/medsam_model_e280.pth",
+                "--resume", "/data/home/yli/projects/CLIP-SAM/work_dir/20240510-2206/medsam_model_e390.pth",
                 "-work_dir", "/data/home/yli/projects/CLIP-SAM/work_dir",
                 "--demo_config", "./config/config_demo.json",
                 "-output_dir", "./output",
-                "-ct_path", "/data/DataSSD3/yli/data/nnunet_raw/nnunet_stkn41/Dataset041_knee/imagesTr/stkn41_0001_0000.nrrd",
-                "-gt_path", "/data/DataSSD3/yli/data/nnunet_raw/nnunet_stkn41/Dataset041_knee/labelsTr/stkn41_0001.nrrd",
+                "-ct_path", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/imagesTr/sthp26_0181_0000.nrrd",
+                "-gt_path", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/labelsTr/sthp26_0181.nrrd",
             ]
         },
 
         {
-            "name": "build_dataset",
+            "name": "train_data_process",
             "type": "python",
             "request": "launch",
             "cwd": "${workspaceFolder}/",
@@ -46,9 +46,9 @@
                 "CUDA_VISIBLE_DEVICES": "2,3",
             },
             "args": [
-                "-image_dir", "/data/DataSSD2/yli/nnunet_raw/nnunet_stkn41/Dataset041_knee/imagesTs/",
-                "-label_dir", "/data/DataSSD2/yli/nnunet_raw/nnunet_stkn41/Dataset041_knee/labelsTs/",
-                "-dataset_code", "0002",
+                "-image_dir", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/imagesTs/",
+                "-label_dir", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/labelsTs/",
+                "-dataset_code", "0003",
                 "-save_root", "/data/DataSSD2/yli/clip_sam/",
                 "-test_ratio", "0.2"
             ]
@@ -66,7 +66,7 @@
                 "CUDA_VISIBLE_DEVICES": "2,3",
             },
             "args": [
-                "-dataset_code", "0002",
+                "-dataset_code", "0003",
                 "-datasets_root", "/data/DataSSD2/yli/clip_sam/",
             ]
         },
@@ -80,7 +80,7 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "env": {
-                "CUDA_VISIBLE_DEVICES": "3",
+                "CUDA_VISIBLE_DEVICES": "2,3",
             },
             "args": [
                 "--resume", "/data/home/yli/projects/CLIP-SAM/pretrained/SegVol_v1.pth",

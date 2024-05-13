@@ -17,7 +17,7 @@ from monai.transforms import (
 def set_parse():
     # %% set up parser
     parser = argparse.ArgumentParser()
-    parser.add_argument("-category", default=['liver', 'right kidney', 'spleen', 'pancreas', 'aorta', 'inferior vena cava', 'right adrenal gland', 'left adrenal gland', 'gallbladder', 'esophagus', 'stomach', 'duodenum', 'left kidney'], type=list)
+    parser.add_argument("-category", default=["hip left", "hip right", "head of femur right", "head of femur left"], type=list)
     parser.add_argument("-image_dir", type=str, required=True)
     parser.add_argument("-label_dir", type=str, required=True)
     parser.add_argument("-dataset_code", type=str, required=True)
@@ -61,7 +61,7 @@ exist_file_list = os.listdir(save_path)
 print('exist_file_list ', exist_file_list)
 
 def normalize(ct_narray):
-    ct_voxel_ndarray = ct_narray.copy()
+    ct_voxel_ndarray = ct_narray.clone()
     ct_voxel_ndarray = ct_voxel_ndarray.flatten()
     # for all data
     thred = np.mean(ct_voxel_ndarray)
@@ -171,7 +171,7 @@ def generate_dataset_json(root_dir, output_file, test_ratio=0.2):
         json.dump(dataset, f, indent=2)
 
 if __name__ == "__main__":    
-    with multiprocessing.Pool(processes=10) as pool:
+    with multiprocessing.Pool(processes=20) as pool:
         pool.map(run, data_path_list_all)
     print('Process Finished!')
     
