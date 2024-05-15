@@ -32,9 +32,9 @@ tqdm, _ = optional_import("tqdm", name="tqdm")
 
 __all__ = ["sliding_window_inference"]
 
-def logits2roi_coor(spatial_size, logits_global_single):
+def logits2roi_coor(spatial_size, logits_global_single, threshold):
     # crop predict
-    pred_global_single = torch.sigmoid(logits_global_single) > 0.5
+    pred_global_single = torch.sigmoid(logits_global_single) > threshold
     ## get all pos idx
     nonzero_indices = torch.nonzero(pred_global_single)
     if nonzero_indices.shape[0] == 0:
@@ -373,7 +373,7 @@ def generate_box(pred_pre, bbox_shift=None):
     max_coords = [dim.max() for dim in ones_idx]    # [x_max, y_max, z_max]
 
 
-    if bbox_shift is None:
+    if bbox_shift is None: # no perturbation
         corner_min = []
         corner_max = []
         shape = meaning_post_label.shape
@@ -382,6 +382,20 @@ def generate_box(pred_pre, bbox_shift=None):
             corner_min.append(coor_)
         for idx, coor in enumerate(max_coords):
             coor_ = min(shape[idx], coor)
+            corner_max.append(coor_)
+        corner_min = torch.tensor(corner_min)
+        corner_max = torch.tensor(corner_max)
+        return torch.cat((corner_min, corner_max), dim=0)
+    elif bbox_shift == 0: # enlarged bbox
+        bbox_shift = 5
+        corner_min = []
+        corner_max = []
+        shape = meaning_post_label.shape
+        for coor in min_coords:
+            coor_ = max(0, coor - bbox_shift)
+            corner_min.append(coor_)
+        for idx, coor in enumerate(max_coords):
+            coor_ = min(shape[idx], coor + bbox_shift)
             corner_max.append(coor_)
         corner_min = torch.tensor(corner_min)
         corner_max = torch.tensor(corner_max)

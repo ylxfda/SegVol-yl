@@ -53,7 +53,7 @@ def dice_score(preds, labels):  # on GPU
     
     return dice, predict
 
-def zoom_in_zoom_out(args, segvol_model, image, image_resize, gt3D, gt3D_resize, categories=None):
+def zoom_in_zoom_out(args, segvol_model, image, image_resize, gt3D, gt3D_resize, categories=None, threshold=0.5):
     logits_labels_record = {}
     image_single_resize = image_resize
     image_single = image[0,0]
@@ -76,7 +76,7 @@ def zoom_in_zoom_out(args, segvol_model, image, image_resize, gt3D, gt3D_resize,
             points_single = (point.unsqueeze(0).float().cuda(), point_label.unsqueeze(0).float().cuda()) 
             binary_points_resize = build_binary_points(point, point_label, label_single_resize.shape)
         if args.use_box_prompt:
-            box_single = generate_box(label_single_resize).unsqueeze(0).float().cuda()
+            box_single = generate_box(label_single_resize, bbox_shift=0).unsqueeze(0).float().cuda()
             binary_cube_resize = build_binary_cube(box_single, binary_cube_shape=label_single_resize.shape)
         
         ####################
@@ -117,14 +117,14 @@ def zoom_in_zoom_out(args, segvol_model, image, image_resize, gt3D, gt3D_resize,
 
         ####################
         # zoom-in inference:
-        min_d, min_h, min_w, max_d, max_h, max_w = logits2roi_coor(args.spatial_size, logits_global_single)
+        min_d, min_h, min_w, max_d, max_h, max_w = logits2roi_coor(args.spatial_size, logits_global_single, threshold)
         if min_d is None:
             print('Fail to detect foreground!')
             continue
 
         # Crop roi
         image_single_cropped = image_single[min_d:max_d+1, min_h:max_h+1, min_w:max_w+1].unsqueeze(0).unsqueeze(0)
-        global_preds = (torch.sigmoid(logits_global_single[min_d:max_d+1, min_h:max_h+1, min_w:max_w+1])>0.5).long()
+        global_preds = (torch.sigmoid(logits_global_single[min_d:max_d+1, min_h:max_h+1, min_w:max_w+1])>threshold).long()
         
         assert not (args.use_box_prompt and args.use_point_prompt)
         prompt_reflection = None

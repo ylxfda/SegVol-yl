@@ -7,6 +7,7 @@ import random
 from utils.monai_inferers_utils import select_points, generate_box
 from utils.loss import BCELoss, BinaryDiceLoss
 from torch.cuda.amp import autocast
+from monai.losses import GeneralizedDiceFocalLoss, DiceCELoss # HausdorffDTLoss
 
 #%% set up model
 class SegVol(nn.Module):
@@ -28,6 +29,10 @@ class SegVol(nn.Module):
         self.test_mode = test_mode
         self.dice_loss = BinaryDiceLoss().cuda()
         self.bce_loss = BCELoss().cuda()
+        
+        # monai losses
+        self.gen_dice_focal_loss = GeneralizedDiceFocalLoss(sigmoid=True).cuda()
+        
         self.decoder_iter = 6
 
     def forward(self, image, text=None, boxes=None, points=None, **kwargs):
@@ -86,7 +91,8 @@ class SegVol(nn.Module):
             bboxes, points, organs = prompt
             logits = self.forward_decoder(image_embedding, img_shape, text=organs, boxes=bboxes, points=points)
             # cal loss
-            sl_loss_dice = self.dice_loss.forward(logits.squeeze().float(), train_labels.squeeze().float())
+            # sl_loss_dice = self.dice_loss.forward(logits.squeeze().float(), train_labels.squeeze().float())
+            sl_loss_dice = self.gen_dice_focal_loss(logits.squeeze().float(), train_labels.squeeze().float())
             sl_loss_bce = self.bce_loss.forward(logits.squeeze().float(), train_labels.squeeze().float())
             sl_loss += sl_loss_dice + sl_loss_bce
         return sl_loss
@@ -101,7 +107,8 @@ class SegVol(nn.Module):
                 pseudo_labels, pseudo_bboxes_prompt = self.build_pseudo_box_prompt_label(image.shape, pseudo_seg_cleaned)
                 logits = self.forward_decoder(image_embedding, img_shape, text=None, boxes=pseudo_bboxes_prompt, points=None)
             # cal loss
-            sll_loss_dice = self.dice_loss.forward(logits.squeeze().float(), pseudo_labels.squeeze().float())
+            # sll_loss_dice = self.dice_loss.forward(logits.squeeze().float(), pseudo_labels.squeeze().float())
+            sll_loss_dice = self.gen_dice_focal_loss(logits.squeeze().float(), pseudo_labels.squeeze().float()) 
             sll_loss_bce = self.bce_loss.forward(logits.squeeze().float(), pseudo_labels.squeeze().float())
             sll_loss += sll_loss_dice + sll_loss_bce
         return sll_loss

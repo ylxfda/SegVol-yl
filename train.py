@@ -174,7 +174,7 @@ def main_worker(gpu, ngpus_per_node, args):
             print(rank, "=> loading checkpoint '{}'".format(args.resume))
             loc = 'cuda:{}'.format(gpu)
             checkpoint = torch.load(args.resume, map_location = loc)
-            segvol_model.load_state_dict(checkpoint['model'])
+            segvol_model.load_state_dict(checkpoint['model'], strict=False)
             start_epoch = checkpoint['epoch']
             scheduler.last_epoch = start_epoch
             print(rank, "=> loaded checkpoint '{}' (epoch {})".format(args.resume, checkpoint['epoch']))
@@ -184,6 +184,7 @@ def main_worker(gpu, ngpus_per_node, args):
         args.writer = SummaryWriter(log_dir='./tb_log/' + args.run_id)
         print('Writing Tensorboard logs to ', './tb_log/' + args.run_id)
 
+    best_loss = 1e10
     for epoch in range(start_epoch, num_epochs):
         with segvol_model.join():
             epoch_loss, iter_num = train_epoch(args, segvol_model, train_dataloader, optimizer, scheduler, epoch, rank, gpu, iter_num)
@@ -198,6 +199,10 @@ def main_worker(gpu, ngpus_per_node, args):
                 'scheduler': scheduler.state_dict(),
             }
             torch.save(checkpoint, os.path.join(args.model_save_path, f'medsam_model_e{epoch+1}.pth'))
+            if epoch_loss < best_loss:
+                best_loss = epoch_loss
+                torch.save(checkpoint, os.path.join(args.model_save_path, f'medsam_model_best.pth'))
+                
         torch.distributed.barrier()
 
 def main():
