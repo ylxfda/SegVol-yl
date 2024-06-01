@@ -209,7 +209,7 @@ def main(args):
         ## Map model to be loaded to specified single GPU
         loc = 'cuda:{}'.format(gpu)
         checkpoint = torch.load(args.resume, map_location=loc)
-        segvol_model.load_state_dict(checkpoint['model'], strict=True)
+        segvol_model.load_state_dict(checkpoint['model'], strict=False)
         print("loaded checkpoint '{}' (epoch {})".format(args.resume, checkpoint['epoch']))
 
     # load demo config

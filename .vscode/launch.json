@@ -25,12 +25,13 @@
             },
             "args": [
                 // "--resume", "/data/home/yli/projects/CLIP-SAM/pretrained/SegVol_v1.pth",
-                "--resume", "/data/home/yli/projects/CLIP-SAM/work_dir/20240512-2247/medsam_model_e430.pth",
+                // "--resume", "/data/home/yli/projects/CLIP-SAM/work_dir/20240515-1329/medsam_model_e420.pth",
+                "--resume", "/data/home/yli/projects/CLIP-SAM/work_dir/20240510-2206-mako-hip-Ts/medsam_model_e390.pth",
                 "-work_dir", "/data/home/yli/projects/CLIP-SAM/work_dir",
                 "--demo_config", "./config/config_demo.json",
                 "-output_dir", "./output",
-                "-ct_path", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/imagesTr/sthp26_0354_0000.nrrd",
-                "-gt_path", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/labelsTr/sthp26_0354.nrrd",
+                "-ct_path", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/imagesTr/sthp26_0181_0000.nrrd",
+                "-gt_path", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/labelsTr/sthp26_0181.nrrd",
             ]
         },
 

@@ -7,7 +7,7 @@ import monai.transforms as transforms
 
 def draw_result(category, image, bboxes, points, logits, gt3D, spatial_size, work_dir):
     zoom_out_transform = transforms.Compose([
-        transforms.AddChanneld(keys=["image", "label", "logits"]),
+        transforms.EnsureChannelFirstd(keys=["image", "label", "logits"], channel_dim="no_channel"),
         transforms.Resized(keys=["image", "label", "logits"], spatial_size=spatial_size, mode='nearest-exact')
     ])
     post_item = zoom_out_transform({

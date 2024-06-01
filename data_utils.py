@@ -65,7 +65,7 @@ class UniversalDataset(Dataset):
         else:
             pseudo_seg_array = np.load(pseudo_seg_path).squeeze()
             rebuild_transform = transforms.Compose(
-                    [transforms.AddChannel(),
+                    [transforms.EnsureChannelFirst(channel_dim="no_channel"),
                      transforms.Resize(spatial_size=ct_array.shape),])
             pseudo_seg_array = rebuild_transform(pseudo_seg_array)
             item_ori = {
@@ -219,7 +219,7 @@ def build_concat_dataset(root_path, dataset_codes, transform):
 def get_loader(args):
     train_transform = transforms.Compose(
         [
-            transforms.AddChanneld(keys=["image"]),
+            transforms.EnsureChannelFirstd(keys=["image"], channel_dim="no_channel"),
             DimTranspose(keys=["image", "label", "pseudo_seg"]),
             MinMaxNormalization(),
             transforms.CropForegroundd(keys=["image", "label", "pseudo_seg"], source_key="image"),

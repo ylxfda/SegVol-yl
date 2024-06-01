@@ -66,7 +66,7 @@ def process_ct_gt(case_path, label_path, category, spatial_size):
     ###
     item = {}
     # generate ct_voxel_ndarray
-    ct_voxel_ndarray, _ = img_loader(case_path)
+    ct_voxel_ndarray = img_loader(case_path)
     print(type(ct_voxel_ndarray))
     ct_voxel_ndarray = np.array(ct_voxel_ndarray).squeeze()
     ct_shape = ct_voxel_ndarray.shape
@@ -74,7 +74,7 @@ def process_ct_gt(case_path, label_path, category, spatial_size):
     item['image'] = ct_voxel_ndarray
 
     # generate gt_voxel_ndarray
-    gt_voxel_ndarray, _ = img_loader(label_path)
+    gt_voxel_ndarray = img_loader(label_path)
     gt_voxel_ndarray = np.array(gt_voxel_ndarray)
     present_categories = np.unique(gt_voxel_ndarray)
     gt_masks = []
