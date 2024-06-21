@@ -8,7 +8,7 @@ import json
 join = os.path.join
 
 from monai.transforms import (
-    AddChanneld,
+    EnsureChannelFirstd,
     Compose,
     LoadImaged,
     Orientationd,
@@ -17,7 +17,7 @@ from monai.transforms import (
 def set_parse():
     # %% set up parser
     parser = argparse.ArgumentParser()
-    parser.add_argument("-category", default=["hip left", "hip right", "head of femur right", "head of femur left"], type=list)
+    parser.add_argument("-category", default=["skull"], type=list)
     parser.add_argument("-image_dir", type=str, required=True)
     parser.add_argument("-label_dir", type=str, required=True)
     parser.add_argument("-dataset_code", type=str, required=True)
@@ -47,7 +47,7 @@ for idx in range(len(image_list_all)):
 img_loader = Compose(
         [
             LoadImaged(keys=['image', 'label']),
-            AddChanneld(keys=['image', 'label']),
+            EnsureChannelFirstd(channel_dim="no_channel", keys=['image', 'label']),
             # Orientationd(keys=['image', 'label'], axcodes="RAS"),
         ]
     )

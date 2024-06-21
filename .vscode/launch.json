@@ -24,14 +24,14 @@
                 "CUDA_VISIBLE_DEVICES": "3",
             },
             "args": [
-                // "--resume", "/data/home/yli/projects/CLIP-SAM/pretrained/SegVol_v1.pth",
+                "--resume", "/data/DataSSD2/yli/clip_sam_workdir/20240613-1259/medsam_model_best.pth",
                 // "--resume", "/data/home/yli/projects/CLIP-SAM/work_dir/20240515-1329/medsam_model_e420.pth",
-                "--resume", "/data/home/yli/projects/CLIP-SAM/work_dir/20240510-2206-mako-hip-Ts/medsam_model_e390.pth",
+                // "--resume", "/data/home/yli/projects/CLIP-SAM/work_dir/20240510-2206-mako-hip-Ts/medsam_model_e390.pth",
                 "-work_dir", "/data/home/yli/projects/CLIP-SAM/work_dir",
                 "--demo_config", "./config/config_demo.json",
                 "-output_dir", "./output",
-                "-ct_path", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/imagesTr/sthp26_0181_0000.nrrd",
-                "-gt_path", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/labelsTr/sthp26_0181.nrrd",
+                "-ct_path", "/data/DataSSD3/yli/data/nnunet_raw/nnunet_cmf/Dataset005_cmf/imagesTr/CMF00227_0000.nrrd",
+                "-gt_path", "/data/DataSSD3/yli/data/nnunet_raw/nnunet_cmf/Dataset005_cmf/labelsTr/CMF00227.nrrd",
             ]
         },
 
@@ -47,11 +47,14 @@
                 "CUDA_VISIBLE_DEVICES": "2,3",
             },
             "args": [
-                "-image_dir", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/imagesTs/",
-                "-label_dir", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/labelsTs/",
-                "-dataset_code", "0003",
+                // "-image_dir", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/imagesTs/",
+                "-image_dir", "/data/DataSSD3/yli/data/nnunet_raw/nnunet_cmf/Dataset005_cmf/images/",
+                // "-label_dir", "/data/DataSSD2/yli/nnunet_raw/nnunet_sthp26/Dataset026_bilateral_hip/labelsTs/",
+                "-label_dir", "/data/DataSSD3/yli/data/nnunet_raw/nnunet_cmf/Dataset005_cmf/labels/",
+
+                "-dataset_code", "0004",
                 "-save_root", "/data/DataSSD2/yli/clip_sam/",
-                "-test_ratio", "0.2"
+                "-test_ratio", "0.1"
             ]
         },
 
@@ -67,7 +70,7 @@
                 "CUDA_VISIBLE_DEVICES": "2,3",
             },
             "args": [
-                "-dataset_code", "0003",
+                "-dataset_code", "0004",
                 "-datasets_root", "/data/DataSSD2/yli/clip_sam/",
             ]
         },
@@ -81,11 +84,12 @@
             "console": "integratedTerminal",
             "justMyCode": false,
             "env": {
-                "CUDA_VISIBLE_DEVICES": "3",
+                "CUDA_VISIBLE_DEVICES": "2,3",
             },
             "args": [
-                "--resume", "/data/home/yli/projects/CLIP-SAM/work_dir/20240510-2206-mako-hip-Ts/medsam_model_e390.pth",
-                "-work_dir", "work_dir",
+                // "--resume", "/data/home/yli/projects/CLIP-SAM/work_dir/20240510-2206-mako-hip-Ts/medsam_model_e390.pth",
+                "--resume", "/data/home/yli/projects/CLIP-SAM/pretrained/SegVol_v1.pth",
+                "-work_dir", "/data/DataSSD2/yli/clip_sam_workdir/",
                 "--data_dir", "/data/DataSSD2/yli/clip_sam/",
                 // "--data_dir", "/data/DataSSD3/yli/data/FLARE22Train/clip-sam/",
                 // "--dataset_codes", "0001",

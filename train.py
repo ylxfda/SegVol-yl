@@ -18,7 +18,7 @@ def set_parse():
     parser.add_argument("--pretrain", type = str, default='')
     parser.add_argument("--resume", type = str, default='')
     parser.add_argument("--data_dir", type = str, default='')
-    parser.add_argument("--dataset_codes", type = list, nargs='+', default=['0003'])
+    parser.add_argument("--dataset_codes", type = list, nargs='+', default=['0004'])
     # config
     parser.add_argument("--test_mode", default=False, type=bool)
     parser.add_argument("-infer_overlap", default=0.5, type=float, help="sliding window inference overlap")
@@ -146,6 +146,12 @@ def main_worker(gpu, ngpus_per_node, args):
                         test_mode=args.test_mode,
                         ).cuda()
     
+    # freeze the image encoder
+    # segvol_model.image_encoder.requires_grad_(False)
+    # segvol_model.prompt_encoder.requires_grad_(False)
+    # segvol_model.text_encoder.requires_grad_(False)
+    # segvol_model.mask_decoder.requires_grad_(True)
+    
     segvol_model = torch.nn.parallel.DistributedDataParallel(
         segvol_model,
         device_ids = [gpu],
@@ -153,7 +159,7 @@ def main_worker(gpu, ngpus_per_node, args):
         gradient_as_bucket_view = True,
         find_unused_parameters = True,
         bucket_cap_mb = args.bucket_cap_mb
-    )
+    )        
 
     optimizer = torch.optim.AdamW(
         segvol_model.parameters(),

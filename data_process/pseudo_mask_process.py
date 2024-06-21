@@ -22,7 +22,7 @@ args = set_parse()
 
 transform = transforms.Compose(
         [
-            transforms.AddChanneld(keys=["image"]),
+            transforms.EnsureChannelFirstd(channel_dim="no_channel", keys=["image"]),
             transforms.Resized(keys=["image", "label"], spatial_size=args.spatial_size),
         ]
     )
@@ -81,7 +81,7 @@ def run(info):
     print(f'---> save {save_file}')
     np.save(save_file, segmented_image)
 
-with multiprocessing.Pool(processes=30) as pool:
+with multiprocessing.Pool(processes=20) as pool:
     pool.map(run, process_list)
 
 print('FH Pseudo Mask Build Done!')

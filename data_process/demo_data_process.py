@@ -57,7 +57,7 @@ def process_ct_gt(case_path, label_path, category, spatial_size):
             DimTranspose(keys=["image", "label"]),
             MinMaxNormalization(),
             transforms.SpatialPadd(keys=["image", "label"], spatial_size=spatial_size, mode='constant'),
-            transforms.CropForegroundd(keys=["image", "label"], source_key="image"),
+            # transforms.CropForegroundd(keys=["image", "label"], source_key="image"), # YL turn off to keep the original size
             transforms.ToTensord(keys=["image", "label"]),
         ]
     )
